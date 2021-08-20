@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="RemoteRepositoriesConfiguration">
+    <remote-repository>
+      <option name="id" value="central" />
+      <option name="name" value="Maven Central repository" />
+      <option name="url" value="https://repo1.maven.org/maven2" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="jboss.community" />
+      <option name="name" value="JBoss Community repository" />
+      <option name="url" value="https://repository.jboss.org/nexus/content/repositories/public/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="Google17" />
+      <option name="name" value="Google17" />
+      <option name="url" value="https://dl.google.com/dl/android/maven2/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="BintrayJCenter15" />
+      <option name="name" value="BintrayJCenter15" />
+      <option name="url" value="https://jcenter.bintray.com/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven11" />
+      <option name="name" value="maven11" />
+      <option name="url" value="https://maven.aliyun.com/nexus/content/repositories/google" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="MavenRepo" />
+      <option name="name" value="MavenRepo" />
+      <option name="url" value="https://repo.maven.apache.org/maven2/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven35" />
+      <option name="name" value="maven35" />
+      <option name="url" value="https://maven.aliyun.com/repository/gradle-plugin" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven4" />
+      <option name="name" value="maven4" />
+      <option name="url" value="https://maven.aliyun.com/repository/google" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven33" />
+      <option name="name" value="maven33" />
+      <option name="url" value="https://maven.aliyun.com/repository/central" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven5" />
+      <option name="name" value="maven5" />
+      <option name="url" value="https://maven.aliyun.com/repository/jcenter" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven34" />
+      <option name="name" value="maven34" />
+      <option name="url" value="http://maven.aliyun.com/nexus/content/repositories/jcenter/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven19" />
+      <option name="name" value="maven19" />
+      <option name="url" value="http://maven.aliyun.com/nexus/content/repositories/gradle-plugin" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven36" />
+      <option name="name" value="maven36" />
+      <option name="url" value="http://maven.aliyun.com/nexus/content/groups/public" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven12" />
+      <option name="name" value="maven12" />
+      <option name="url" value="https://maven.aliyun.com/nexus/content/repositories/gradle-plugin" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven18" />
+      <option name="name" value="maven18" />
+      <option name="url" value="http://maven.aliyun.com/nexus/content/repositories/google" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven23" />
+      <option name="name" value="maven23" />
+      <option name="url" value="https://maven.aliyun.com/repository/public" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven16" />
+      <option name="name" value="maven16" />
+      <option name="url" value="http://maven.aliyun.com/nexus/content/groups/public/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven8" />
+      <option name="name" value="maven8" />
+      <option name="url" value="https://storage.flutter-io.cn/download.flutter.io" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven9" />
+      <option name="name" value="maven9" />
+      <option name="url" value="https://maven.aliyun.com/nexus/content/groups/public/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven10" />
+      <option name="name" value="maven10" />
+      <option name="url" value="https://maven.aliyun.com/nexus/content/repositories/jcenter" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven20" />
+      <option name="name" value="maven20" />
+      <option name="url" value="https://jitpack.io" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven17" />
+      <option name="name" value="maven17" />
+      <option name="url" value="http://maven.aliyun.com/nexus/content/repositories/jcenter" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven13" />
+      <option name="name" value="maven13" />
+      <option name="url" value="http://47.112.160.66:8081/repository/maven-releases" />
+    </remote-repository>
+  </component>
+</project>

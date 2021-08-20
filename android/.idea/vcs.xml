@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="$PROJECT_DIR$/../../Open-IM-SDK-Flutter" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/.." vcs="Git" />
+    <mapping directory="$USER_HOME$/Development/flutter/.pub-cache/git/flutter_background-441be74c2b9a93a13028ec2dc8a48977362c5041" vcs="Git" />
+    <mapping directory="$USER_HOME$/Development/flutter/.pub-cache/git/flutter_qr_reader-11eabbbde139b7a40c45f5599bbc3cf85a12a7d8" vcs="Git" />
+  </component>
+</project>

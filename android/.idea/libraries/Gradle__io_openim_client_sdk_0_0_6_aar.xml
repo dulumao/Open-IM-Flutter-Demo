@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: io.openim:client-sdk:0.0.6@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/a14ffb44109145cfad1e321829562a9a/jetified-client-sdk-0.0.6/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/a14ffb44109145cfad1e321829562a9a/jetified-client-sdk-0.0.6/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/a14ffb44109145cfad1e321829562a9a/jetified-client-sdk-0.0.6/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
