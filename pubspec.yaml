@@ -68,7 +68,7 @@ dependencies:
   dio: ^4.0.0
   shared_preferences: ^2.0.6
   images_picker: ^1.2.4
-  media_info: ^0.7.0
+  media_info: ^0.8.0
   synchronized: ^3.0.0
   chewie: ^1.2.2
   video_player: ^2.1.6
@@ -105,6 +105,7 @@ dependencies:
   map_launcher: ^2.1.1
   flutter_svg: ^0.22.0
   open_file: ^3.2.1
+  jpush_flutter: 2.1.4
 #  flutter_bmflocation: ^1.0.4
 #  flutter_baidu_mapapi_map: ^2.0.1
 #  flutter_baidu_mapapi_search: ^2.0.1

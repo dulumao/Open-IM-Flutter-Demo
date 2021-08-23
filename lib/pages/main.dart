@@ -1,12 +1,11 @@
 import 'package:eechart/blocs/bloc_provider.dart';
 import 'package:eechart/blocs/bottom_bar_bloc.dart';
 import 'package:eechart/blocs/im_bloc.dart';
-import 'package:eechart/blocs/login_bloc.dart';
 import 'package:eechart/common/packages.dart';
-import 'package:eechart/common/widgets.dart';
 import 'package:eechart/pages/conversation/conversation_list.dart';
 import 'package:eechart/pages/mine/mine.dart';
 import 'package:eechart/widgets/bottom_bar.dart';
+import 'package:eechart/widgets/jpush_state.dart';
 import 'package:flutter_fgbg/flutter_fgbg.dart';
 
 import 'contacts/contacts_list.dart';
@@ -18,7 +17,7 @@ class MainPage extends StatefulWidget {
   _MainPageState createState() => _MainPageState();
 }
 
-class _MainPageState extends State<MainPage> {
+class _MainPageState extends JpushState<MainPage> {
   var _index = 0;
 
   @override

@@ -40,6 +40,11 @@ android {
 //            // 设置支持的SO库架构
 //            abiFilters "armeabi-v7a"
 //        }
+        manifestPlaceholders = [
+                JPUSH_PKGNAME : "io.openim.app.demo",
+                JPUSH_APPKEY : "ed5aac0bd3909ba34bb97705", // NOTE: JPush 上注册的包名对应的 Appkey.
+                JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
+        ]
     }
     lintOptions {
         checkReleaseBuilds false
