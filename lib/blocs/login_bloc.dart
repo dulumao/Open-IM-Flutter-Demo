@@ -16,9 +16,11 @@ var dio = Dio();
 class LoginBloc extends BlocBase {
   final textCtrl = TextEditingController();
   final uuid = Uuid();
+  late String account;
 
   LoginBloc() {
-    textCtrl.text = SpUtil.getString("account");
+    account = SpUtil.getString("account");
+    textCtrl.text = account;
     if (textCtrl.text.isEmpty) {
       // var _mnemonicStr = bip39.generateMnemonic();
       // textCtrl.text = _mnemonicStr;
@@ -30,14 +32,12 @@ class LoginBloc extends BlocBase {
     try {
       if (textCtrl.text.isEmpty) return;
       LoadingView.show(context);
-      /*  OpenImToken? imToken = SpUtil.getObj(
-        textCtrl.text,
-            (v) => OpenImToken.fromJson(v.cast()),
-      );*/
-
-      String uid = /*imToken?.uid ?? ''*/ '';
-      String token = /*imToken?.token ?? ''*/ '';
-      if (uid.isEmpty && token.isEmpty) {
+      String uid = "";
+      String token = "";
+      if (account.isNotEmpty) {
+        uid = SpUtil.getString(account);
+      }
+      if (uid.isEmpty /* && token.isEmpty*/) {
         var resp =
             await dio.post<Map<String, dynamic>>(Config.IP_REGISTER, data: {
           'secret': Config.secret,
@@ -71,15 +71,28 @@ class LoginBloc extends BlocBase {
         var user = LoginResult.fromJson(resp.data ?? {}).data;
         uid = user?.openImToken?.uid ?? '';
         token = user?.openImToken?.token ?? '';*/
+      } else {
+        var resp = await dio.post<Map<String, dynamic>>(Config.IP_LOGIN, data: {
+          'secret': Config.secret,
+          'platform': Platform.isAndroid ? IMPlatform.android : IMPlatform.ios,
+          'uid': uid,
+        });
+        Map? result = resp.data!['data'];
+        print('login data:$result');
+        uid = result!['uid'];
+        token = result['token'];
       }
-      if (uid.isNotEmpty && token.isNotEmpty)
+      if (uid.isNotEmpty && token.isNotEmpty) {
+        SpUtil.putString('account', textCtrl.text);
+        SpUtil.putString(textCtrl.text, uid);
         OpenIM.iMManager
             .login(uid: uid, token: token)
             .then((value) => SpUtil.putString("account", textCtrl.text))
             .then((value) => NavigatorManager.startMain())
             .catchError((e) => _showError(e))
-        // .catchError((e) => OpenIM.iMManager.logout())
+            // .catchError((e) => OpenIM.iMManager.logout())
             .whenComplete(() => LoadingView.dismiss());
+      }
     } catch (e) {
       _showError(e);
     }
