@@ -3,13 +3,18 @@ import 'package:eechart/common/config.dart';
 import 'package:eechart/common/event_bus.dart';
 import 'package:eechart/common/packages.dart';
 import 'package:eechart/utils/media_path.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_openim_sdk/flutter_openim_sdk.dart';
 import 'package:path_provider/path_provider.dart';
 
-class IMBloc extends BlocBase {
+class IMBloc extends BlocBase
+    implements
+        InitSDKListener,
+        ConversationListener,
+        GroupListener,
+        AdvancedMsgListener,
+        MsgSendProgressListener,
+        FriendshipListener {
   static const PLATFORM = 1;
-  late AdvancedMsgListenerImpl msgListenerImpl;
 
   IMBloc() {
     init();
@@ -22,7 +27,7 @@ class IMBloc extends BlocBase {
       ipApi: Config.IP_API,
       ipWs: Config.IP_WS,
       dbPath: "$imCachePath/",
-      listener: InitSDKListenerImpl(),
+      listener: this,
     );
 
     _listenerSet();
@@ -34,42 +39,26 @@ class IMBloc extends BlocBase {
     //     .setFriendshipListener(FriendshipListenerImpl());
 
     ///
-    msgListenerImpl = AdvancedMsgListenerImpl(
-      onNewMessage: (s) {
-        postMessageEvent(s);
-      },
-      onMessageRevoked: (s) {
-        postRevokeMessageEvent(s);
-      },
-      onMessageHaveRead: (s) {
-        postMessageHaveReadEvent(s);
-      },
-    );
 
     ///
-    OpenIM.iMManager.messageManager.addAdvancedMsgListener(msgListenerImpl);
+    OpenIM.iMManager.messageManager.addAdvancedMsgListener(this);
 
     ///
-    OpenIM.iMManager.messageManager
-        .setMsgSendProgressListener(MsgSendProgressListenerImpl());
+    OpenIM.iMManager.messageManager.setMsgSendProgressListener(this);
 
     ///
-    OpenIM.iMManager.conversationManager
-        .setConversationListener(ConversationListenerImpl());
+    OpenIM.iMManager.conversationManager.setConversationListener(this);
 
     // ///
-    OpenIM.iMManager.friendshipManager
-        .setFriendshipListener(FriendshipListenerImpl());
+    OpenIM.iMManager.friendshipManager.setFriendshipListener(this);
 
     ///
-    OpenIM.iMManager.groupManager.setGroupListener(GroupListenerImpl());
+    OpenIM.iMManager.groupManager.setGroupListener(this);
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
-    OpenIM.iMManager.messageManager
-        .removeAdvancedMsgListener(msgListenerImpl);
+    OpenIM.iMManager.messageManager.removeAdvancedMsgListener(this);
   }
 
   /*void reLogin() async {
@@ -92,220 +81,100 @@ class IMBloc extends BlocBase {
   forceReConn() {
     OpenIM.iMManager.forceReConn();
   }
-}
 
-class InitSDKListenerImpl implements InitSDKListener {
   @override
-  void onConnectFailed(int? int, String? errorMsg) {
-    // TODO: implement onConnectFailed
-    print('=======flutter============>onConnectFailed');
+  String get id => "id_${DateTime.now().microsecondsSinceEpoch}";
+
+  @override
+  void onApplicationProcessed(String groupId, GroupMembersInfo opUser,
+      int agreeOrReject, String opReason) {
+    postGroupApplicationEvent();
+  }
+
+  @override
+  void onBlackListAdd(UserInfo u) {
+    postBlackListEvent(u);
+    postFriendListEvent(u);
+  }
+
+  @override
+  void onBlackListDeleted(UserInfo u) {
+    postBlackListEvent(u);
+    postFriendListEvent(u);
+  }
+
+  @override
+  void onConnectFailed(int? code, String? errorMsg) {
   }
 
   @override
   void onConnectSuccess() {
-    // TODO: implement onConnectSuccess
-    print('=======flutter============>onConnectSuccess');
   }
 
   @override
   void onConnecting() {
-    // TODO: implement onConnecting
-    print('=======flutter============>onConnecting');
   }
 
   @override
-  void onKickedOffline() {
-    // TODO: implement onKickedOffline
-    print('=======flutter============>onKickedOffline');
+  void onConversationChanged(List<ConversationInfo> list) {
+    postConversationListEvent();
   }
 
   @override
-  void onSelfInfoUpdated(UserInfo info) {
-    // TODO: implement onSelfInfoUpdated
-    print('=======flutter============>onSelfInfoUpdated');
-  }
-
-  @override
-  void onUserSigExpired() {
-    // TODO: implement onUserSigExpired
-    print('=======flutter============>onUserSigExpired');
-  }
-}
-
-class FriendshipListenerImpl implements FriendshipListener {
-  @override
-  void onBlackListAdd(u) {
-    // TODO: implement onBlackListAdd
-    print('=======flutter onBlackListAdd============>$u');
-    postBlackListEvent(u);
-    postFriendListEvent(u);
-  }
-
-  @override
-  void onBlackListDeleted(u) {
-    // TODO: implement onBlackListDeleted
-    print('=======flutter onBlackListDeleted============>$u');
-    postBlackListEvent(u);
-    postFriendListEvent(u);
-  }
-
-  @override
-  void onFriendApplicationListAccept(u) {
-    // TODO: implement onFriendApplicationListAccept
-    print('=======flutter onFriendApplicationListAccept============>$u');
+  void onFriendApplicationListAccept(UserInfo u) {
     postFriendApplicationListEvent(u);
     postFriendListEvent(u);
   }
 
   @override
-  void onFriendApplicationListAdded(u) {
-    // TODO: implement onFriendApplicationListAdded
-    print('=======flutter onFriendApplicationListAdded============>$u');
+  void onFriendApplicationListAdded(UserInfo u) {
     postFriendApplicationListEvent(u);
     postFriendListEvent(u);
   }
 
   @override
-  void onFriendApplicationListDeleted(u) {
-    // TODO: implement onFriendApplicationListDeleted
-    print('=======flutter onFriendApplicationListDeleted============>$u');
-    postFriendApplicationListEvent(u);
-    // postFriendListEvent(u);
-  }
-
-  @override
-  void onFriendApplicationListReject(u) {
-    // TODO: implement onFriendApplicationListReject
-    print('=======flutter onFriendApplicationListReject============>$u');
+  void onFriendApplicationListDeleted(UserInfo u) {
     postFriendApplicationListEvent(u);
   }
 
   @override
-  void onFriendInfoChanged(u) {
-    // TODO: implement onFriendInfoChanged
-    print('=======flutter onFriendInfoChanged============>$u');
+  void onFriendApplicationListReject(UserInfo u) {
+    postFriendApplicationListEvent(u);
+  }
+
+  @override
+  void onFriendInfoChanged(UserInfo u) {
     userInfoMap[u.uid] = u;
     postFriendInfoChangedEvent(u);
     postFriendListEvent(u);
   }
 
   @override
-  void onFriendListAdded(u) {
-    // TODO: implement onFriendListAdded
-    print('=======flutter onFriendListAdded============>$u');
+  void onFriendListAdded(UserInfo u) {
     postFriendListEvent(u);
     postFriendAcceptEvent(u);
   }
 
   @override
-  void onFriendListDeleted(u) {
-    // TODO: implement onFriendListDeleted
-    print('=======flutter onFriendListDeleted============>$u');
+  void onFriendListDeleted(UserInfo u) {
     postFriendListEvent(u);
-  }
-}
-
-class AdvancedMsgListenerImpl extends AdvancedMsgListener {
-/*  final String _id;*/
-  final ValueChanged<Message>? onNewMessage;
-  final ValueChanged<String>? onMessageRevoked;
-  final ValueChanged<List<HaveReadInfo>>? onMessageHaveRead;
-
-  AdvancedMsgListenerImpl(/*  this._id, */ {
-    this.onNewMessage,
-    this.onMessageRevoked,
-    this.onMessageHaveRead,
-  }) /*: super(id: _id)*/;
-
-/*  @override
-  // TODO: implement id
-  String get id => _id;*/
-
-  @override
-  void onRecvNewMessage(Message msg) {
-    // TODO: implement onRecvNewMessage
-    print('=======flutter onRecvNewMessage============>');
-    if (null != onNewMessage) onNewMessage!(msg);
-  }
-
-  @override
-  void onRecvMessageRevoked(String msgId) {
-    // TODO: implement onRecvMessageRevoked
-    print('=======flutter onRecvMessageRevoked============>');
-    if (null != onMessageRevoked) onMessageRevoked!(msgId);
-  }
-
-  @override
-  void onRecvC2CReadReceipt(List<HaveReadInfo> list) {
-    if (null != onMessageHaveRead) onMessageHaveRead!(list);
-  }
-}
-
-class MsgSendProgressListenerImpl implements MsgSendProgressListener {
-  @override
-  void onProgress(String msgID, int progress) {
-    print('=======flutter onProgress============>$msgID');
-    postMessageSendProgressEvent(msgID, progress);
-  }
-}
-
-class ConversationListenerImpl implements ConversationListener {
-  @override
-  void onConversationChanged(List<ConversationInfo> list) {
-    // TODO: implement onConversationChanged
-    postConversationListEvent();
-  }
-
-  @override
-  void onNewConversation(List<ConversationInfo> list) {
-    // TODO: implement onNewConversation
-    postConversationListEvent();
-  }
-
-  @override
-  void onSyncServerFailed() {
-    // TODO: implement onSyncServerFailed
-  }
-
-  @override
-  void onSyncServerFinish() {
-    // TODO: implement onSyncServerFinish
-  }
-
-  @override
-  void onSyncServerStart() {
-    // TODO: implement onSyncServerStart
-  }
-
-  @override
-  void onTotalUnreadMessageCountChanged(int i) {
-    // TODO: implement onTotalUnreadMessageCountChanged
-    postUnreadMsgCountEvent(i);
-  }
-}
-
-class GroupListenerImpl implements GroupListener {
-  @override
-  void onApplicationProcessed(String groupId, GroupMembersInfo opUser,
-      int agreeOrReject, String opReason) {
-    // TODO: implement onApplicationProcessed
-    postGroupApplicationEvent();
   }
 
   @override
   void onGroupCreated(String groupId) {
-    // TODO: implement onGroupCreated
   }
 
   @override
   void onGroupInfoChanged(String groupId, GroupInfo info) {
-    // TODO: implement onGroupInfoChanged
     postGroupInfoChangedEvent(info);
   }
 
   @override
+  void onKickedOffline() {
+  }
+
+  @override
   void onMemberEnter(String groupId, List<GroupMembersInfo> list) {
-    // TODO: implement onMemberEnter
     postGroupMemberChangeEvent();
     postGroupApplicationEvent();
   }
@@ -313,27 +182,73 @@ class GroupListenerImpl implements GroupListener {
   @override
   void onMemberInvited(
       String groupId, GroupMembersInfo opUser, List<GroupMembersInfo> list) {
-    // TODO: implement onMemberInvited
     postGroupMemberChangeEvent();
   }
 
   @override
   void onMemberKicked(
       String groupId, GroupMembersInfo opUser, List<GroupMembersInfo> list) {
-    // TODO: implement onMemberKicked
     postGroupMemberChangeEvent();
   }
 
   @override
   void onMemberLeave(String groupId, GroupMembersInfo info) {
-    // TODO: implement onMemberLeave
     postGroupMemberChangeEvent();
+  }
+
+  @override
+  void onNewConversation(List<ConversationInfo> list) {
+    postConversationListEvent();
+  }
+
+  @override
+  void onProgress(String msgID, int progress) {
+    postMessageSendProgressEvent(msgID, progress);
   }
 
   @override
   void onReceiveJoinApplication(
       String groupId, GroupMembersInfo info, String opReason) {
-    // TODO: implement onReceiveJoinApplication
     postGroupApplicationEvent();
+  }
+
+  @override
+  void onRecvC2CReadReceipt(List<HaveReadInfo> list) {
+    postMessageHaveReadEvent(list);
+  }
+
+  @override
+  void onRecvMessageRevoked(String msgId) {
+    postRevokeMessageEvent(msgId);
+  }
+
+  @override
+  void onRecvNewMessage(Message msg) {
+    postMessageEvent(msg);
+  }
+
+  @override
+  void onSelfInfoUpdated(UserInfo info) {
+  }
+
+  @override
+  void onSyncServerFailed() {
+  }
+
+  @override
+  void onSyncServerFinish() {
+  }
+
+  @override
+  void onSyncServerStart() {
+  }
+
+  @override
+  void onTotalUnreadMessageCountChanged(int i) {
+    postUnreadMsgCountEvent(i);
+  }
+
+  @override
+  void onUserSigExpired() {
   }
 }

@@ -9,7 +9,7 @@ import 'package:eechart/pages/contacts/friend_set.dart';
 import 'package:eechart/pages/group/group_setting.dart';
 import 'package:eechart/utils/navigator_manager.dart';
 import 'package:eechart/widgets/base_state.dart';
-import 'package:keyboard_utils/keyboard_listener.dart';
+import 'package:keyboard_utils/keyboard_listener.dart' as ku;
 import 'package:keyboard_utils/keyboard_utils.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
@@ -92,7 +92,7 @@ class _ChatPageState extends BaseState<ChatPage> {
         _refreshController.refreshCompleted();
       });
     _idKeyboardListener = _keyboardUtils.add(
-      listener: KeyboardListener(
+      listener: ku.KeyboardListener(
         willHideKeyboard: () {},
         willShowKeyboard: (double keyboardHeight) {
           _autoScrollController.jumpTo(_autoScrollController.position.maxScrollExtent);

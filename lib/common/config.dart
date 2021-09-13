@@ -30,10 +30,20 @@ class Config {
     }
   }
 
-  /// api地址
-  static const IP_API = 'https://open-im.rentsoft.cn';
-  /// websocket地址
-  static const IP_WS = 'wss://open-im.rentsoft.cn/wss';
-  /// token置换接口地址
-  static const IP_LOGIN = 'https://open-im.rentsoft.cn/eechat/user/login';
+  /// 秘钥
+  static const secret = 'tuoyun';
+
+  static const HOST = '//1.14.194.38';
+
+  /// 登录地址
+  static const IP_LOGIN = 'http:$HOST:10000/auth/user_token';
+
+  /// 注册地址
+  static const IP_REGISTER = 'http:$HOST:10000/auth/user_register';
+
+  /// sdk配置的api地址
+  static const IP_API = 'http:$HOST:10000';
+
+  /// sdk配置的web socket地址
+  static const IP_WS = 'ws:$HOST:17778';
 }
