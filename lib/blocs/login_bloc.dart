@@ -1,5 +1,7 @@
+import 'dart:convert';
 import 'dart:io';
 
+import 'package:crypto/crypto.dart';
 import 'package:dio/dio.dart';
 import 'package:eechart/blocs/bloc_provider.dart';
 import 'package:eechart/common/config.dart';
@@ -21,7 +23,10 @@ class LoginBloc extends BlocBase {
     account = SpUtil.getString("account");
     textCtrl.text = account;
     if (textCtrl.text.isEmpty) {
-      textCtrl.text = uuid.v4();
+      var content = new Utf8Encoder().convert(uuid.v4());
+      var digest = md5.convert(content);
+      var value = digest.toString();
+      textCtrl.text = value.substring(value.length ~/ 2);
     }
   }
 
@@ -81,7 +86,7 @@ class LoginBloc extends BlocBase {
             .then((value) => SpUtil.putString("account", textCtrl.text))
             .then((value) => NavigatorManager.startMain())
             .catchError((e) => _showError(e))
-            // .catchError((e) => OpenIM.iMManager.logout())
+        // .catchError((e) => OpenIM.iMManager.logout())
             .whenComplete(() => LoadingView.dismiss());
       }
     } catch (e) {

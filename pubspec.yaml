@@ -15,7 +15,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.0+1
+version: 2.0.0+1
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
@@ -83,8 +83,9 @@ dependencies:
 #  flutter_openim_sdk:
 #    git:
 #      url: https://github.com/OpenIMSDK/Open-IM-SDK-Flutter.git
-  flutter_openim_sdk:
-    path: ../Open-IM-SDK-Flutter
+  flutter_openim_sdk: ^0.0.4
+#  flutter_openim_sdk:
+#    path: ../flutter_openim_sdk
 #  flutter_qr_reader:
 #    path: ../flutter_qr_reader-1.0.5
 #  material_tag_editor: ^0.1.1
@@ -110,7 +111,7 @@ dependencies:
   open_file: ^3.2.1
   jpush_flutter: 2.1.4
   uuid: ^3.0.4
-  chinese_idioms: ^1.0.0
+  crypto: ^3.0.1
 #  flutter_bmflocation: ^1.0.4
 #  flutter_baidu_mapapi_map: ^2.0.1
 #  flutter_baidu_mapapi_search: ^2.0.1

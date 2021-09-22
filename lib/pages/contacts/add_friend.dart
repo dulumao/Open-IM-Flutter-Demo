@@ -358,7 +358,7 @@ class SelectResultPage extends StatelessWidget {
                                 title: info.getShowName(),
                               )).then((value) => Navigator.pop(context, true));
                         } else {
-                          bloc?.addFriend(uid: info.uid, reason: '');
+                          bloc?.addFriend(uid: info.uid, reason: '哈哈哈哈');
                         }
                       });
                     },
