@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:azlistview/azlistview.dart';
 import 'package:eechart/blocs/bloc_provider.dart';
@@ -123,7 +122,7 @@ class ContactBloc extends BlocBase {
   Future<dynamic> setFriendInfo({required String uid}) {
     if (remarkEditCtrl.text.isEmpty) return Future.error('text is empty');
     return OpenIM.iMManager.friendshipManager
-        .setFriendInfo(info: UserInfo(uid: uid, comment: remarkEditCtrl.text))
+        .setFriendInfo(uid: uid, comment: remarkEditCtrl.text)
         .then((value) => postFriendNicknameChanged(uid, remarkEditCtrl.text));
   }
 

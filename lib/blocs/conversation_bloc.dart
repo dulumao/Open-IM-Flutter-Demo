@@ -34,12 +34,12 @@ class ConversationBloc extends BlocBase {
   }
 
   Future<dynamic> markSingleMessageHasRead({required String userId}) {
-    return OpenIM.iMManager.messageManager
+    return OpenIM.iMManager.conversationManager
         .markSingleMessageHasRead(userID: userId);
   }
 
   Future<dynamic> markGroupMessageHasRead({required String groupId}) {
-    return OpenIM.iMManager.messageManager
+    return OpenIM.iMManager.conversationManager
         .markGroupMessageHasRead(groupID: groupId);
   }
 

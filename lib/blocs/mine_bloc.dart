@@ -27,8 +27,7 @@ class MineBloc extends BlocBase {
 
   Future<String?> setSelfInfo(String uid) {
     if (nicknameCtrl.text.isEmpty) return Future.error('nickname is empty');
-    return OpenIM.iMManager
-        .setSelfInfo(UserInfo(uid: uid, name: nicknameCtrl.text));
+    return OpenIM.iMManager.setSelfInfo(uid: uid, name: nicknameCtrl.text);
   }
 
   @override

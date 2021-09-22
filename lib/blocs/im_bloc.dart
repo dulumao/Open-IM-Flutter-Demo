@@ -86,169 +86,169 @@ class IMBloc extends BlocBase
   String get id => "id_${DateTime.now().microsecondsSinceEpoch}";
 
   @override
-  void onApplicationProcessed(String groupId, GroupMembersInfo opUser,
+  void applicationProcessed(String groupId, GroupMembersInfo opUser,
       int agreeOrReject, String opReason) {
     postGroupApplicationEvent();
   }
 
   @override
-  void onBlackListAdd(UserInfo u) {
+  void blackListAdd(UserInfo u) {
     postBlackListEvent(u);
     postFriendListEvent(u);
   }
 
   @override
-  void onBlackListDeleted(UserInfo u) {
+  void blackListDeleted(UserInfo u) {
     postBlackListEvent(u);
     postFriendListEvent(u);
   }
 
   @override
-  void onConnectFailed(int? code, String? errorMsg) {
+  void connectFailed(int? code, String? errorMsg) {
   }
 
   @override
-  void onConnectSuccess() {
+  void connectSuccess() {
   }
 
   @override
-  void onConnecting() {
+  void connecting() {
   }
 
   @override
-  void onConversationChanged(List<ConversationInfo> list) {
+  void conversationChanged(List<ConversationInfo> list) {
     postConversationListEvent();
   }
 
   @override
-  void onFriendApplicationListAccept(UserInfo u) {
+  void friendApplicationListAccept(UserInfo u) {
     postFriendApplicationListEvent(u);
     postFriendListEvent(u);
   }
 
   @override
-  void onFriendApplicationListAdded(UserInfo u) {
+  void friendApplicationListAdded(UserInfo u) {
     postFriendApplicationListEvent(u);
     postFriendListEvent(u);
   }
 
   @override
-  void onFriendApplicationListDeleted(UserInfo u) {
+  void friendApplicationListDeleted(UserInfo u) {
     postFriendApplicationListEvent(u);
   }
 
   @override
-  void onFriendApplicationListReject(UserInfo u) {
+  void friendApplicationListReject(UserInfo u) {
     postFriendApplicationListEvent(u);
   }
 
   @override
-  void onFriendInfoChanged(UserInfo u) {
+  void friendInfoChanged(UserInfo u) {
     userInfoMap[u.uid] = u;
     postFriendInfoChangedEvent(u);
     postFriendListEvent(u);
   }
 
   @override
-  void onFriendListAdded(UserInfo u) {
+  void friendListAdded(UserInfo u) {
     postFriendListEvent(u);
     postFriendAcceptEvent(u);
   }
 
   @override
-  void onFriendListDeleted(UserInfo u) {
+  void friendListDeleted(UserInfo u) {
     postFriendListEvent(u);
   }
 
   @override
-  void onGroupCreated(String groupId) {
+  void groupCreated(String groupId) {
   }
 
   @override
-  void onGroupInfoChanged(String groupId, GroupInfo info) {
+  void groupInfoChanged(String groupId, GroupInfo info) {
     postGroupInfoChangedEvent(info);
   }
 
   @override
-  void onKickedOffline() {
+  void kickedOffline() {
   }
 
   @override
-  void onMemberEnter(String groupId, List<GroupMembersInfo> list) {
+  void memberEnter(String groupId, List<GroupMembersInfo> list) {
     postGroupMemberChangeEvent();
     postGroupApplicationEvent();
   }
 
   @override
-  void onMemberInvited(
+  void memberInvited(
       String groupId, GroupMembersInfo opUser, List<GroupMembersInfo> list) {
     postGroupMemberChangeEvent();
   }
 
   @override
-  void onMemberKicked(
+  void memberKicked(
       String groupId, GroupMembersInfo opUser, List<GroupMembersInfo> list) {
     postGroupMemberChangeEvent();
   }
 
   @override
-  void onMemberLeave(String groupId, GroupMembersInfo info) {
+  void memberLeave(String groupId, GroupMembersInfo info) {
     postGroupMemberChangeEvent();
   }
 
   @override
-  void onNewConversation(List<ConversationInfo> list) {
+  void newConversation(List<ConversationInfo> list) {
     postConversationListEvent();
   }
 
   @override
-  void onProgress(String msgID, int progress) {
+  void progress(String msgID, int progress) {
     postMessageSendProgressEvent(msgID, progress);
   }
 
   @override
-  void onReceiveJoinApplication(
+  void receiveJoinApplication(
       String groupId, GroupMembersInfo info, String opReason) {
     postGroupApplicationEvent();
   }
 
   @override
-  void onRecvC2CReadReceipt(List<HaveReadInfo> list) {
+  void recvC2CReadReceipt(List<HaveReadInfo> list) {
     postMessageHaveReadEvent(list);
   }
 
   @override
-  void onRecvMessageRevoked(String msgId) {
+  void recvMessageRevoked(String msgId) {
     postRevokeMessageEvent(msgId);
   }
 
   @override
-  void onRecvNewMessage(Message msg) {
+  void recvNewMessage(Message msg) {
     postMessageEvent(msg);
   }
 
   @override
-  void onSelfInfoUpdated(UserInfo info) {
+  void selfInfoUpdated(UserInfo info) {
   }
 
   @override
-  void onSyncServerFailed() {
+  void syncServerFailed() {
   }
 
   @override
-  void onSyncServerFinish() {
+  void syncServerFinish() {
   }
 
   @override
-  void onSyncServerStart() {
+  void syncServerStart() {
   }
 
   @override
-  void onTotalUnreadMessageCountChanged(int i) {
+  void totalUnreadMessageCountChanged(int i) {
     postUnreadMsgCountEvent(i);
   }
 
   @override
-  void onUserSigExpired() {
+  void userSigExpired() {
   }
 }

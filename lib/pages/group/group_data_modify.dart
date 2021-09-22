@@ -149,10 +149,8 @@ class __EditGroupNamePageState extends State<_EditGroupNamePage> {
           if (_controller.text.isNotEmpty) {
             _groupBloc
                 .setGroupInfo(
-              gInfo: GroupInfo(
-                groupID: widget.gInfo.groupID,
-                groupName: _controller.text,
-              ),
+              groupID: widget.gInfo.groupID,
+              groupName: _controller.text,
             )
                 .then((value) {
               widget.gInfo.groupName = _controller.text;
@@ -246,10 +244,8 @@ class __EditGroupIntroductionPageState
           if (_controller.text.isNotEmpty) {
             _groupBloc
                 .setGroupInfo(
-              gInfo: GroupInfo(
-                groupID: widget.gInfo.groupID,
-                introduction: _controller.text,
-              ),
+              groupID: widget.gInfo.groupID,
+              introduction: _controller.text,
             )
                 .then((value) {
               widget.gInfo.introduction = _controller.text;

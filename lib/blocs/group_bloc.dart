@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:eechart/blocs/bloc_provider.dart';
 import 'package:eechart/common/event_bus.dart';
@@ -52,7 +51,6 @@ class GroupBloc extends BlocBase {
     return LoadingView.wrap(
       context,
       OpenIM.iMManager.groupManager.createGroup(
-        groupInfo: null,
         list: roles,
       ),
     );
@@ -123,11 +121,21 @@ class GroupBloc extends BlocBase {
         .then((value) => joinedGroupCheckCtrl.addSafely(value));
   }
 
-  Future<dynamic> setGroupInfo({required GroupInfo gInfo}) {
+  Future<dynamic> setGroupInfo({
+    required groupID,
+    String? groupName,
+    String? notification,
+    String? introduction,
+    String? faceUrl,
+  }) {
     return LoadingView.wrap(
         context,
         OpenIM.iMManager.groupManager.setGroupInfo(
-          groupInfo: gInfo,
+          groupID: groupID,
+          groupName: groupName,
+          notification: notification,
+          introduction: introduction,
+          faceUrl: faceUrl,
         ));
   }
 

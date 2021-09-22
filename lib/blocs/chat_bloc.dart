@@ -209,9 +209,9 @@ class ChatBloc extends BlocBase {
 
   void markSingleMessageHasRead() {
     if (null != uid && uid!.trim().isNotEmpty)
-      OpenIM.iMManager.messageManager.markSingleMessageHasRead(userID: uid!);
+      OpenIM.iMManager.conversationManager.markSingleMessageHasRead(userID: uid!);
     else if (null != gid && gid!.trim().isNotEmpty)
-      OpenIM.iMManager.messageManager.markGroupMessageHasRead(groupID: gid!);
+      OpenIM.iMManager.conversationManager.markGroupMessageHasRead(groupID: gid!);
   }
 
   void sendTextMsg({

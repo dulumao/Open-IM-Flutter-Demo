@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:chinese_idioms/chinese_idioms.dart';
 import 'package:dio/dio.dart';
 import 'package:eechart/blocs/bloc_provider.dart';
 import 'package:eechart/common/config.dart';
@@ -22,9 +21,7 @@ class LoginBloc extends BlocBase {
     account = SpUtil.getString("account");
     textCtrl.text = account;
     if (textCtrl.text.isEmpty) {
-      // var _mnemonicStr = bip39.generateMnemonic();
-      // textCtrl.text = _mnemonicStr;
-      textCtrl.text = generateIdioms().first;
+      textCtrl.text = uuid.v4();
     }
   }
 
@@ -34,54 +31,48 @@ class LoginBloc extends BlocBase {
       LoadingView.show(context);
       String uid = "";
       String token = "";
-      if (account.isNotEmpty) {
-        uid = SpUtil.getString(account);
-      }
-      if (uid.isEmpty /* && token.isEmpty*/) {
-        var resp =
-            await dio.post<Map<String, dynamic>>(Config.IP_REGISTER, data: {
+      var resp;
+      bool isRegistered = false;
+      try {
+        resp = await dio.post<Map<String, dynamic>>(Config.IP_REGISTER, data: {
           'secret': Config.secret,
           'platform': Platform.isAndroid ? IMPlatform.android : IMPlatform.ios,
-          'uid': uuid.v4(),
+          'uid': textCtrl.text,
           'name': textCtrl.text,
         });
-        Map? data = resp.data!['data'];
-        print('register data:$data');
+        isRegistered = true;
+      } catch (e) {
+        //{"errCode":500,"errMsg":"rpc error: code = Unknown desc = Error 1062: Duplicate entry '333333' for key 'PRIMARY'"}
+        var error = e as DioError;
+        print('e--:${error.response}');
+        print('e--:${error.response.runtimeType}');
+        print('e--:${error.response?.data}');
+        print('e--:${error.response?.data.runtimeType}');
+        print('e--:${error.response?.data['errMsg']}');
+        String? errMsg = error.response?.data['errMsg'];
+        var key = "Duplicate entry '${textCtrl.text}' for key 'PRIMARY";
+        if (null != errMsg && errMsg.contains(key)) {
+          //
+          isRegistered = true;
+        }
+      }
+
+
+      print('isRegistered:$isRegistered');
+      if (isRegistered) {
+        // Map? data = resp.data!['data'];
+        // print('register data:$data');
         resp = await dio.post<Map<String, dynamic>>(Config.IP_LOGIN, data: {
           'secret': Config.secret,
           'platform': Platform.isAndroid ? IMPlatform.android : IMPlatform.ios,
-          'uid': data!['uid'],
-        });
-        Map? result = resp.data!['data'];
-        print('login data:$result');
-        uid = result!['uid'];
-        token = result['token'];
-
-        /*var resp = await dio.post<Map<String, dynamic>>(
-          Config.IP_LOGIN,
-          //'http://47.112.160.66:20000/user/login',
-          data: {
-            'account': textCtrl.text,
-            'password': '123456',
-            'operationID': '1',
-            'platform': 1,
-          },
-        );
-        print('===============resp:$resp');
-        var user = LoginResult.fromJson(resp.data ?? {}).data;
-        uid = user?.openImToken?.uid ?? '';
-        token = user?.openImToken?.token ?? '';*/
-      } else {
-        var resp = await dio.post<Map<String, dynamic>>(Config.IP_LOGIN, data: {
-          'secret': Config.secret,
-          'platform': Platform.isAndroid ? IMPlatform.android : IMPlatform.ios,
-          'uid': uid,
+          'uid': textCtrl.text,
         });
         Map? result = resp.data!['data'];
         print('login data:$result');
         uid = result!['uid'];
         token = result['token'];
       }
+
       if (uid.isNotEmpty && token.isNotEmpty) {
         SpUtil.putString('account', textCtrl.text);
         SpUtil.putString(textCtrl.text, uid);
@@ -94,6 +85,13 @@ class LoginBloc extends BlocBase {
             .whenComplete(() => LoadingView.dismiss());
       }
     } catch (e) {
+      print('e:$e');
+      // var error = e as DioError;
+      // print('e--:${error.response}');
+      // print('e--:${error.response.runtimeType}');
+      // print('e--:${error.response?.data}');
+      // print('e--:${error.response?.data.runtimeType}');
+      // print('e--:${error.response?.data['errMsg']}');
       _showError(e);
     }
   }

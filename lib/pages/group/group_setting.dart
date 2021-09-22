@@ -537,10 +537,8 @@ class _EditGroupAnnouncementPageState
           if (_controller.text.isNotEmpty) {
             _groupBloc
                 .setGroupInfo(
-                  gInfo: GroupInfo(
-                    groupID: widget.gInfo.groupID,
-                    notification: _controller.text,
-                  ),
+                  groupID: widget.gInfo.groupID,
+                  notification: _controller.text,
                 )
                 .then((value) => Navigator.pop(context));
           }
