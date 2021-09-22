@@ -43,7 +43,7 @@ class LoginBloc extends BlocBase {
           'secret': Config.secret,
           'platform': Platform.isAndroid ? IMPlatform.android : IMPlatform.ios,
           'uid': textCtrl.text,
-          'name': textCtrl.text,
+          'name': 'Ox${textCtrl.text}',
         });
         isRegistered = true;
       } catch (e) {
