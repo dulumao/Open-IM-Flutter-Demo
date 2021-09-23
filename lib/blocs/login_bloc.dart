@@ -38,13 +38,47 @@ class LoginBloc extends BlocBase {
       String token = "";
       var resp;
       bool isRegistered = false;
+      var plat = Platform.isAndroid ? IMPlatform.android : IMPlatform.ios;
       try {
         resp = await dio.post<Map<String, dynamic>>(Config.IP_REGISTER, data: {
           'secret': Config.secret,
-          'platform': Platform.isAndroid ? IMPlatform.android : IMPlatform.ios,
+          'platform': plat,
           'uid': textCtrl.text,
           'name': 'Ox${textCtrl.text}',
         });
+        //////////////
+       /* resp = await dio.post<Map<String, dynamic>>(Config.IP_LOGIN, data: {
+          'secret': Config.secret,
+          'platform': plat,
+          'uid': 'openIM123456',
+        });
+        Map? result = resp.data!['data'];
+        uid = result!['uid'];
+        token = result['token'];
+        // 导入
+        resp = await dio.post<Map<String, dynamic>>(
+            'http://1.14.194.38:10000/friend/import_friend',
+            data: {
+              "uid": "21979710c3fe454d",
+              "operationID": "1111111222",
+              "ownerUid": "f732156059eeb5d0"
+            },
+            options: Options(headers: {
+              'token': token,
+            }));
+        // 进组
+        resp = await dio.post<Map<String, dynamic>>(
+            'http://1.14.194.38:10000/group/invite_user_to_group',
+            data: {
+              "groupID": "f21f9f84c14f3a978352ff339f1a800a",
+              "uidList": ["openIM123456", ""],
+              "reason": "reason",
+              "operationID": "1111111111111 "
+            },
+            options: Options(headers: {
+              'token': token,
+            }));*/
+        ///////////////////////
         isRegistered = true;
       } catch (e) {
         //{"errCode":500,"errMsg":"rpc error: code = Unknown desc = Error 1062: Duplicate entry '333333' for key 'PRIMARY'"}

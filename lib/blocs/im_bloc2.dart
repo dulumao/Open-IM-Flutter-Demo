@@ -11,7 +11,7 @@ class IMBloc2 extends BlocBase {
   static const PLATFORM = 1;
   late AdvancedMsgListenerImpl msgListenerImpl;
 
-  IMBloc() {
+  IMBloc2() {
     init();
   }
 

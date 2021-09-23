@@ -42,18 +42,22 @@ class _MinePageState extends State<MinePage> {
                     height: 24.h,
                   ),
                   _buildItemView(
-                      icon: 'ic_mine_ic1', text: S.of(context).mine_text1),
+                    icon: 'ic_mine_ic1',
+                    text: S.of(context).mine_text1,
+                  ).intoGesture(onTap: () {
+
+                  }),
                   _buildItemView(
                     icon: 'ic_mine_ic2',
                     text: S.of(context).mine_text2,
                   ).intoGesture(
                     onTap: () => NavigatorManager.push(
-                        context,
-                        BlocProvider(
-                            bloc: MineBloc()
-                              ..initNicknameCtrl(hot.data?.name ?? ''),
-                            child:
-                            SetNicknamePage(uid: hot.data?.uid ?? '')))
+                            context,
+                            BlocProvider(
+                                bloc: MineBloc()
+                                  ..initNicknameCtrl(hot.data?.name ?? ''),
+                                child:
+                                    SetNicknamePage(uid: hot.data?.uid ?? '')))
                         .then((value) {
                       if (value == true) {
                         _bloc.getUserInfo();

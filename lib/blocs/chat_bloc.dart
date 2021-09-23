@@ -574,6 +574,7 @@ class ChatBloc extends BlocBase {
         downloadCtrl.addSafely(info..progress = progress);
         if (progress == 100) {
           SpUtil.putString(message.clientMsgID!, path);
+          ImageGallerySaver.saveFile(path);
         }
       },
     );
