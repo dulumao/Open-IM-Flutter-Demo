@@ -48,9 +48,10 @@ class LoginBloc extends BlocBase {
           'uid': textCtrl.text,
           'name': 'Ox${textCtrl.text}',
         });
+        print('----------------注册');
         ///////////////////////////////////忽略以下逻辑/////////////////////////////////
         // 管理员登录
-      /*  resp = await dio.post<Map<String, dynamic>>(Config.IP_LOGIN, data: {
+        resp = await dio.post<Map<String, dynamic>>(Config.IP_LOGIN, data: {
           'secret': Config.secret,
           'platform': plat,
           'uid': 'openIM123456',
@@ -58,31 +59,36 @@ class LoginBloc extends BlocBase {
         Map? result = resp.data!['data'];
         uid = result!['uid'];
         token = result['token'];
+        print('----------------管理员登录');
         // 为用户导入好友
-        resp = await dio.post<Map<String, dynamic>>(
-            'http://1.14.194.38:10000/friend/import_friend',
-            data: {
-              "uidList": idList,
-              "ownerUid": textCtrl.text,
-              "operationID": "1111111111111",
-            },
-            options: Options(headers: {
-              'token': token,
-            }));
+        try {
+          resp = await dio.post/*<Map<String, dynamic>>*/(
+              'http://1.14.194.38:10000/friend/import_friend',
+              data: {
+                "uidList": idList,
+                "ownerUid": textCtrl.text,
+                "operationID": "1111111111111",
+              },
+              options: Options(headers: {
+                'token': token,
+              }));
+        } catch (e) {
+          print('e:$e');
+        }
         print('----------------导入好友成功');
         // 把用户拉进组
-        resp = await dio.post<Map<String, dynamic>>(
+        resp = await dio.post/*<Map<String, dynamic>>*/(
             'http://1.14.194.38:10000/group/invite_user_to_group',
             data: {
               "groupID": gid,
-              "uidList": idList,
+              "uidList": [textCtrl.text],
               "reason": "default op",
               "operationID": "1111111111111 "
             },
             options: Options(headers: {
               'token': token,
             }));
-        print('----------------进组成功');*/
+        print('----------------进组成功');
         ////////////////////////////////////////////////////////////////////////////
 
         isRegistered = true;
@@ -130,13 +136,13 @@ class LoginBloc extends BlocBase {
       }
     } catch (e) {
       print('e:$e');
-      var error = e as DioError;
+      // var error = e as DioError;
       // print('e--:${error.response}');
       // print('e--:${error.response.runtimeType}');
       // print('e--:${error.response?.data}');
       // print('e--:${error.response?.data.runtimeType}');
       // print('e--:${error.response?.data['errMsg']}');
-      _showError(error.response?.data['errMsg'] ?? e);
+      _showError(e);
     }
   }
 
