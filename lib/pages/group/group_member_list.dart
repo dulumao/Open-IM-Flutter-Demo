@@ -48,9 +48,9 @@ class _GroupMemberListPageState extends BaseState<GroupMemberListPage> {
               var list = hot.data;
               var len = list?.length ?? 0;
               if (widget.role == GroupRole.member) {
-                len = (len > 5 ? 5 : len) + 1;
+                len =/* (len > 5 ? 5 : len)*/ len + 1;
               } else {
-                len = (len > 5 ? 5 : len) + 2;
+                len = /*(len > 5 ? 5 : len)*/ len + 2;
               }
               return GridView.builder(
                 itemCount: len,
@@ -141,6 +141,7 @@ class _GroupMemberListPageState extends BaseState<GroupMemberListPage> {
                 fontSize: 12.sp,
                 color: Color(0xFF999999),
               ),
+              overflow: TextOverflow.ellipsis,
             ),
           ],
         ),
