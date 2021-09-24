@@ -134,15 +134,11 @@ class ChatBloc extends BlocBase {
       }
     });
     _revokeMessageSubs = subsStream<RevokeMessageEvent>((event) {
-      var msg = Message(clientMsgID: event.msgId);
       //撤回
-      print('========================撤回：${msg.clientMsgID}');
-      print('========================撤回：${chatMsgList.contains(msg)}');
-      if (chatMsgList.contains(msg)) {
-        chatMsgList.remove(msg);
-        chatMsgListCtrl.addSafely(chatMsgList);
-        scrollListCtrl.addSafely(chatMsgList.length - 1);
-      }
+      print('========================撤回：${event.msgId}');
+      chatMsgList.removeWhere((e) => e.clientMsgID == event.msgId);
+      chatMsgListCtrl.addSafely(chatMsgList);
+      scrollListCtrl.addSafely(chatMsgList.length - 1);
     });
     _messageHaveReadSubs = subsStream<MessageHaveReadEvent>((event) {
       print('=====================标记 0 ：${uid}');

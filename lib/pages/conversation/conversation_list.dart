@@ -136,22 +136,32 @@ class _ConversationListPageState extends State<ConversationListPage> {
 
   String _lastMsg({required ConversationInfo info}) {
     if (info.latestMsg?.contentType == MessageType.picture) {
-      return '[Picture]';
+      return '[图片]';
     } else if (info.latestMsg?.contentType == MessageType.video) {
-      return '[Video]';
+      return '[视频]';
     } else if (info.latestMsg?.contentType == MessageType.voice) {
-      return '[Voice]';
+      return '[语音]';
     } else if (info.latestMsg?.contentType == MessageType.file) {
-      return '[File]';
+      return '[文件]';
     }  else if (info.latestMsg?.contentType == MessageType.location) {
       return '[位置]';
-    }else if (info.latestMsg?.contentType == MessageType.at_text) {
+    } else if (info.latestMsg?.contentType == MessageType.merger) {
+      return '[合并消息]';
+    } else if (info.latestMsg?.contentType == MessageType.card) {
+      return '[名片]';
+    } else if (info.latestMsg?.contentType == MessageType.revoke) {
+      if (info.latestMsg?.sendID == OpenIM.iMManager.uid) {
+        return '[你撤回了一条消息]';
+      } else {
+        return '"[${info.latestMsg!.senderNickName}你撤回了一条消息]';
+      }
+    } else if (info.latestMsg?.contentType == MessageType.at_text) {
       String text = info.latestMsg?.content?.trim() ?? '';
       try {
         Map map = json.decode(text);
         text = map['text'];
         bool isAtSelf = map['isAtSelf'];
-        if (isAtSelf == false) {
+        if (isAtSelf == true) {
           text = '[@ you]$text';
         }
       } catch (e) {}
