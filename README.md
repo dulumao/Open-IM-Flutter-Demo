@@ -4,10 +4,20 @@
 ![img](https://github.com/hrxiang/OpenIMFlutterDemo/blob/main/gif/QQ20210728-105242-HD.gif) 
 ![img](https://github.com/hrxiang/OpenIMFlutterDemo/blob/main/gif/QQ20210728-105444-HD.gif) 
 
-### 1，修改配置
+### 1，modify config.dart
+```
+  /// replace your secret
+  static const secret = 'tuoyun';
 
-![913](https://user-images.githubusercontent.com/7018230/133055829-4bfec069-d907-4ea7-800b-f904cc080240.png)
+ /// replace your ip
+  static const HOST = '1.14.194.38';
 
-### 2，执行：flutter pub get
+  static const IP_API = 'http://$HOST:10000';
 
-### 3，执行：flutter run
+  static const IP_WS = 'ws://$HOST:17778';
+```
+
+
+### 2，flutter pub get
+
+### 3，flutter run
